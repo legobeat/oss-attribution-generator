@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // usage
-var yargs = require('yargs')
+const yargs = require('yargs')
     .usage('Calculate the npm modules used in this project and generate a third-party attribution (credits) text.',
     {
         outputDir: {
@@ -24,19 +24,18 @@ if (yargs.argv.help) {
 }
 
 // dependencies
-var npmChecker = require('license-checker');
-var path = require('path');
-var jetpack = require('fs-jetpack');
-var cp = require('child_process');
-var os = require('os');
-var taim = require('taim');
-var sortBy = require('lodash.sortby');
-var {promisify} = require('util');
+const npmChecker = require('license-checker');
+const path = require('path');
+const jetpack = require('fs-jetpack');
+const os = require('os');
+const taim = require('taim');
+const sortBy = require('lodash.sortby');
+const {promisify} = require('util');
 
-var npmCheckerInit = promisify(npmChecker.init);
+const npmCheckerInit = promisify(npmChecker.init);
 
 // const
-var licenseCheckerCustomFormat = {
+const licenseCheckerCustomFormat = {
     name: '',
     version: '',
     description: '',
@@ -57,25 +56,21 @@ function getAttributionForAuthor(a) {
 }
 
 async function getNpmLicenses() {
-    var npmDirs;
-    if (!Array.isArray(options.baseDir)) {
-        npmDirs = [options.baseDir];
-    } else {
-        npmDirs = options.baseDir;
-    }
+    const npmDirs = Array.isArray(options.baseDir)
+      ? options.baseDir
+      : npmDirs = [options.baseDir];
     // first - check that this is even an NPM project
-    for (var i = 0; i < npmDirs.length; i++) {
+    for (let i = 0; i < npmDirs.length; i++) {
         if (!jetpack.exists(path.join(npmDirs[i], 'package.json'))) {
             console.log('directory at "' + npmDirs[i] + '" does not look like an NPM project, skipping NPM checks for path ' + npmDirs[i]);
             return [];
         }
     }
     console.log('Looking at directories: ' + npmDirs)
-    var res = []
-    var checkers = [];
+    const checkers = [];
 
-    for (var i = 0; i < npmDirs.length; i++) {
-        var dir = npmDirs[i];
+    for (let i = 0; i < npmDirs.length; i++) {
+        const dir = npmDirs[i];
         const checker = await npmCheckerInit({
             start: npmDirs[i],
             production: true,
@@ -94,49 +89,45 @@ async function getNpmLicenses() {
         .then((raw_result) => {
             // the result is passed in as an array, one element per npmDir passed in
             // de-dupe the entries and merge it into a single object
-            var merged = {};
+            let merged = {};
             for (var i = 0; i < raw_result.length; i++) {
                 merged = Object.assign(raw_result[i], merged);
             }
             return merged;
         }).then((result) => {
-            
+
             // we want to exclude the top-level project from being included
-            var dir = result[Object.keys(result)[0]]['dir'];
-            var topLevelProjectInfo = jetpack.read(path.join(dir, 'package.json'), 'json');
-            var keys = Object.getOwnPropertyNames(result).filter((k) => {
+            const dir = result[Object.keys(result)[0]]['dir'];
+            const topLevelProjectInfo = jetpack.read(path.join(dir, 'package.json'), 'json');
+            const keys = Object.getOwnPropertyNames(result).filter((k) => {
                 return k !== `${topLevelProjectInfo.name}@${topLevelProjectInfo.version}`;
             });
-            const finalResult = [];
 
             const promises = keys.map((key) => {
                 console.log('processing', key);
 
-                var package = result[key];
-                var defaultPackagePath = `${package['dir']}/node_modules/${package.name}/package.json`;
-      
-                var itemAtPath = jetpack.exists(defaultPackagePath);
-                var packagePath = [defaultPackagePath];
-      
+                const package = result[key];
+                const defaultPackagePath = `${package['dir']}/node_modules/${package.name}/package.json`;
+
+                const itemAtPath = jetpack.exists(defaultPackagePath);
+                const packagePath = [defaultPackagePath];
+
                 if (itemAtPath !== 'file') {
                   packagePath = jetpack.find(package['dir'], {
                     matching: `**/node_modules/${package.name}/package.json`
                   });
                 }
-      
-                var packageJson = "";
-      
-                if (packagePath && packagePath[0]) {
-                  packageJson = jetpack.read(packagePath[0], 'json');
-                } else {
 
+                if (!packagePath || !packagePath[0]) {
                   return Promise.reject(`${package.name}: unable to locate package.json`);
                 }
-      
+
+                const packageJson = jetpack.read(packagePath[0], 'json');
+
                 console.log('processing', packageJson.name, 'for authors and licenseText');
-      
-                var props = {};
-      
+
+                const props = {};
+
                 props.authors =
                   (packageJson.author && getAttributionForAuthor(packageJson.author)) ||
                   (packageJson.contributors && packageJson.contributors
@@ -149,9 +140,9 @@ async function getNpmLicenses() {
 
                         return getAttributionForAuthor(m);
                       }).join(', '));
-      
-                var licenseFile = package.licenseFile;
-      
+
+                const licenseFile = package.licenseFile;
+
                 try {
                   if (licenseFile && jetpack.exists(licenseFile) && path.basename(licenseFile).match(/license/i)) {
                     props.licenseText = jetpack.read(licenseFile);
@@ -161,12 +152,12 @@ async function getNpmLicenses() {
                 } catch (e) {
                   console.warn(e);
 
-                  return {            
+                  return {
                     authors: '',
                     licenseText: ''
                   };
                 }
-      
+
                 return {
                   ignore: false,
                   name: package.name,
@@ -184,9 +175,9 @@ async function getNpmLicenses() {
 }
 
 function applyOverrides(outputDir, licenseInfos) {
-      var userOverridesPath = path.join(outputDir, 'overrides.json');
+      const userOverridesPath = path.join(outputDir, 'overrides.json');
       if (jetpack.exists(userOverridesPath)) {
-          var userOverrides = jetpack.read(userOverridesPath, 'json');
+          const userOverrides = jetpack.read(userOverridesPath, 'json');
           console.log('using overrides', userOverrides);
           for (const key of Object.getOwnPropertyNames(userOverrides)) {
               const licenseInfo = licenseInfos.find(licenseInfo => licenseInfo.name == key);
@@ -207,17 +198,17 @@ function applyOverrides(outputDir, licenseInfos) {
  ***********************/
 
 // sanitize inputs
-var options = {
+const options = {
     baseDir: [],
     outputDir: path.resolve(yargs.argv.outputDir)
 };
 
-for (var i = 0; i < yargs.argv.baseDir.length; i++) {
+for (let i = 0; i < yargs.argv.baseDir.length; i++) {
     options.baseDir.push(path.resolve(yargs.argv.baseDir[i]));
 }
 
 
-taim('Total Processing', 
+taim('Total Processing',
     taim('Npm Licenses', getNpmLicenses()),
 )
     .catch((err) => {
@@ -226,7 +217,7 @@ taim('Total Processing',
     })
     .then((licenseInfos) => {
         applyOverrides(options.outputDir, licenseInfos);
-        var attributionSequence = sortBy(licenseInfos, licenseInfo => licenseInfo.name.toLowerCase)
+        const attributionSequence = sortBy(licenseInfos, licenseInfo => licenseInfo.name.toLowerCase)
             .filter(licenseInfo => {
                 return !licenseInfo.ignore && licenseInfo.name != undefined;
             })
@@ -235,12 +226,12 @@ taim('Total Processing',
                         licenseInfo.licenseText || `license: ${licenseInfo.license}${os.EOL}authors: ${licenseInfo.authors}`].join(os.EOL);
             });
 
-        var attribution = attributionSequence.join(`${os.EOL}${os.EOL}******************************${os.EOL}${os.EOL}`);
+        const attribution = attributionSequence.join(`${os.EOL}${os.EOL}******************************${os.EOL}${os.EOL}`);
 
-        var headerPath = path.join(options.outputDir, 'header.txt');
-        
+        const headerPath = path.join(options.outputDir, 'header.txt');
+
         if (jetpack.exists(headerPath)) {
-            var template = jetpack.read(headerPath);
+            const template = jetpack.read(headerPath);
             console.log('using template', template);
             attribution = template + os.EOL + os.EOL + attribution;
         }
