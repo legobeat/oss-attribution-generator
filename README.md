@@ -1,8 +1,8 @@
-# oss-attribution-generator
+# @metamask/oss-attribution-generator
 utility to parse bower and npm packages used in a project and generate an attribution file to include in your product
 
 ## Installation
-`npm i -g oss-attribution-generator`
+`npm i -g @metamask/oss-attribution-generator`
 
 ## Usage
 
@@ -42,7 +42,7 @@ Sometimes, you may have an "internal" module which you/your team developed, or a
 ```
 {
   "signaling-agent": {
-      "ignore": true 
+      "ignore": true
   }
 }
 ```
@@ -63,7 +63,7 @@ Other times, you may need to supply your own text for the purpose of the attribu
 ```
 
 ## Prior art
-Like most software, this component is built on the shoulders of giants; oss-attribution-generator was inspired in part by the following work:
+Like most software, this component is built on the shoulders of giants; [oss-attribution-generator](https://github.com/zumwald/oss-attribution-generator) was inspired in part by the following work:
   - [license-checker](https://github.com/davglass/license-checker)
   - [node-licensecheck](https://github.com/iceddev/node-licensecheck)
   - [bower-license](https://github.com/AceMetrix/bower-license)
