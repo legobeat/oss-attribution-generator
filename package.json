@@ -5,7 +5,7 @@
     "taim": "^1.1.0",
     "yargs": "^7.1.2"
   },
-  "name": "oss-attribution-generator",
+  "name": "@metamask/oss-attribution-generator",
   "description": "utility to parse bower and npm packages used in a project and generate an attribution file to include in your product",
   "version": "1.7.1",
   "bin": {
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zumwald/oss-attribution-generator.git"
+    "url": "https://github.com/MetaMask/oss-attribution-generator.git"
   },
   "keywords": [
     "license",
@@ -31,9 +31,9 @@
   "author": "Dan Zumwalt",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zumwald/oss-attribution-generator/issues"
+    "url": "https://github.com/MetaMask/oss-attribution-generator/issues"
   },
-  "homepage": "https://github.com/zumwald/oss-attribution-generator#readme",
+  "homepage": "https://github.com/MetaMask/oss-attribution-generator#readme",
   "devDependencies": {
     "mocha": "^9.1.3"
   }
