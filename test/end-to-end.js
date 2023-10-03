@@ -44,7 +44,7 @@ describe('end to end', () => {
 
     it('returns the correct data for rxjs', () => {
         const rxjs = licenseInfos.rxjs;
-        assert(rxjs.version === '6.6.3');
+        assert(rxjs.version === '6.6.7');
         assert(rxjs.authors === 'Ben Lesh <ben@benlesh.com>');
         assert(rxjs.license === 'Apache-2.0');
         assert(rxjs.licenseText.includes('Apache License'));
