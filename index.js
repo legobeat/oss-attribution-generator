@@ -24,7 +24,7 @@ if (yargs.argv.help) {
 }
 
 // dependencies
-const npmChecker = require('license-checker');
+const npmChecker = require('@metamask/license-checker');
 const path = require('path');
 const jetpack = require('fs-jetpack');
 const os = require('os');
