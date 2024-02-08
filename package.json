@@ -1,7 +1,7 @@
 {
   "dependencies": {
+    "@metamask/license-checker": "^26.0.1",
     "fs-jetpack": "^5.1.0",
-    "license-checker": "^25.0.1",
     "taim": "^1.1.0",
     "yargs": "^7.1.2"
   },
@@ -15,7 +15,8 @@
     "index.js"
   ],
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=14.0.0",
+    "npm": ">=8.3.0"
   },
   "scripts": {
     "test": "mocha test"
