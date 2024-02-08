@@ -1,15 +1,9 @@
 {
   "dependencies": {
-    "@metamask/license-checker": "^26.0.0",
+    "@metamask/license-checker": "^26.0.1",
     "fs-jetpack": "^5.1.0",
     "taim": "^1.1.0",
     "yargs": "^7.1.2"
-  },
-  "overrides": {
-    "spdx-compare": "git+https://github.com/MetaMask/spdx-compare.js#3b0f0a5d754dd77e69257fd2ddf2f1fe9c9b0e65"
-  },
-  "resolutions": {
-    "license-checker>spdx-satisfies>spdx-compare": "git+https://github.com/MetaMask/spdx-compare.js#3b0f0a5d754dd77e69257fd2ddf2f1fe9c9b0e65"
   },
   "name": "@metamask/oss-attribution-generator",
   "description": "utility to parse bower and npm packages used in a project and generate an attribution file to include in your product",
