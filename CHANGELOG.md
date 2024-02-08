@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.2]
+### Fixed
+- Update from `license-checker` to `@metamask/license-checker` ([#7](https://github.com/MetaMask/oss-attribution-generator/pull/7))
+
 ## [2.0.1]
 ### Fixed
 - Fix const reassignment ([#17](https://github.com/MetaMask/oss-attribution-generator/pull/17))
@@ -18,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove `lodash` ([mindbridge-ai/#1](https://github.com/mindbridge-ai/oss-attribution-generator/pull/1)) ([#6](https://github.com/MetaMask/oss-attribution-generator/pull/6))
 - Update dependencies ([mindbridge-ai/#3](https://github.com/mindbridge-ai/oss-attribution-generator/pull/3)) ([#3](https://github.com/MetaMask/oss-attribution-generator/pull/3))
 
-[Unreleased]: https://github.com/MetaMask/oss-attribution-generator/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/MetaMask/oss-attribution-generator/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/MetaMask/oss-attribution-generator/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/MetaMask/oss-attribution-generator/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/MetaMask/oss-attribution-generator/releases/tag/v2.0.0
